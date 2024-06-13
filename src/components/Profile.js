@@ -44,7 +44,7 @@ function Profile() {
 
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Profile</Modal.Title>
+                    <Modal.Title className='prfname' >Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {user ? (
