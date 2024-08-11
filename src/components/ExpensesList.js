@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar';
@@ -22,7 +22,7 @@ const ExpensesList = () => {
                 }
 
                 // Constructing the URL with filter parameters
-                let url = `http://localhost:3001/expenses?userId=${userId}`;
+                let url = `https://expensestracker-2.onrender.com/expenses?userId=${userId}`;
                 if (filterType) {
                     url += `&type=${filterType}`;
                 }
@@ -59,7 +59,7 @@ const ExpensesList = () => {
     const handleSave = async (id) => {
         try {
             const expenseToUpdate = expenses.find((expense) => expense._id === id);
-            await axios.put(`http://localhost:3001/expenses/${id}`, expenseToUpdate);
+            await axios.put(`https://expensestracker-2.onrender.com/expenses/${id}`, expenseToUpdate);
             setEditMode({ id: null, field: null });
         } catch (error) {
             console.error('Error updating expense:', error);
@@ -69,24 +69,24 @@ const ExpensesList = () => {
     // Function to handle deleting an expense
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/expenses/${id}`);
+            await axios.delete(`https://expensestracker-2.onrender.com/expenses/${id}`);
             const updatedExpenses = expenses.filter((expense) => expense._id !== id);
             setExpenses(updatedExpenses);
         } catch (error) {
             console.error('Error deleting expense:', error);
         }
     };
-// function to download in excel format
+    // function to download in excel format
     const handleDownload = () => {
         // Exclude the _id field from each expense object
         const expensesWithoutId = expenses.map(({ _id, ...rest }) => rest);
-        
+
         const worksheet = XLSX.utils.json_to_sheet(expensesWithoutId);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Expenses');
         XLSX.writeFile(workbook, 'expenses.xlsx');
     };
-    
+
 
     // Calculate total income and expenses for the selected month
     const totalIncome = expenses
@@ -154,9 +154,9 @@ const ExpensesList = () => {
                                             </div>
                                         </div>
                                     </div>
-                                        <div className="total-section mb-3">
-                                            <strong>Total Income:</strong> ₹ {totalIncome.toFixed(2)} | <strong>Total Expenses:</strong> ₹ {totalExpenses.toFixed(2)}
-                                            <strong>Total Savings:</strong> ₹ {(totalIncome - totalExpenses).toFixed(2)}
+                                    <div className="total-section mb-3">
+                                        <strong>Total Income:</strong> ₹ {totalIncome.toFixed(2)} | <strong>Total Expenses:</strong> ₹ {totalExpenses.toFixed(2)}
+                                        <strong>Total Savings:</strong> ₹ {(totalIncome - totalExpenses).toFixed(2)}
                                     </div>
                                     <div className="table-container">
                                         <table className="table table-bordered">
@@ -265,8 +265,8 @@ const ExpensesList = () => {
                                         </table>
                                     </div>
                                     <button className="btn btn-outline-success mt-3" onClick={handleDownload}>
-                                    Download as Excel
-                                </button>
+                                        Download as Excel
+                                    </button>
                                 </>
                             )}
                         </div>
@@ -279,7 +279,7 @@ const ExpensesList = () => {
             </div>
         </div>
     );
-    
+
 };
 
 export default ExpensesList;
